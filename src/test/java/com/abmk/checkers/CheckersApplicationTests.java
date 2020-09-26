@@ -1,4 +1,4 @@
-package com.abmk.Checkers;
+package com.abmk.checkers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

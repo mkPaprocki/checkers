@@ -1,4 +1,4 @@
-package com.abmk.Checkers;
+package com.abmk.checkers;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
