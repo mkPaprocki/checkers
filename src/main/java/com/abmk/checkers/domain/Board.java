@@ -3,7 +3,10 @@ package com.abmk.checkers.domain;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
 /**
  * Project: Checkers
@@ -12,15 +15,16 @@ import lombok.Data;
  *
  * Author    : Mateusz Paprocki
  */
+@RedisHash("board")
 @Data
 public class Board {
 
-  private final String id;
+  @Id private final UUID id;
   private final Integer size;
   private Map<RowKeyEnum, Map<ColumnKeyEnum, Checker>> boardState;
 
-  public Board(final String id, final Integer size) {
-    this.id = id;
+  public Board(final Integer size) {
+    this.id = UUID.randomUUID();
     this.size = size;
     this.boardState = initializeNewBoardState();
   }

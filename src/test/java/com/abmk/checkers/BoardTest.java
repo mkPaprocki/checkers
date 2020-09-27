@@ -25,13 +25,13 @@ class BoardTest {
 
   @BeforeEach
   void initializeBoard() {
-    Board board = new Board("someId", 8);
+    Board board = new Board(8);
     this.board = board;
   }
 
   @Test
   void boardHasValidDimensions() {
-    Board board = new Board("someId", 8);
+    Board board = new Board(8);
     assertEquals(8, board.getSize());
   }
 
