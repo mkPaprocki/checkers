@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.abmk.checkers.domain.Board;
-import com.abmk.checkers.domain.Checker;
-import com.abmk.checkers.domain.ColumnKeyEnum;
-import com.abmk.checkers.domain.RowKeyEnum;
+import com.abmk.checkers.domain.Piece;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Project: Checkers
@@ -19,58 +19,59 @@ import org.junit.jupiter.api.Test;
  * Author    : Mateusz Paprocki
  *
  */
+@RunWith(SpringRunner.class)
 class BoardTest {
 
   private Board board;
 
   @BeforeEach
   void initializeBoard() {
-    Board board = new Board(8);
+    Board board = new Board(UUID.randomUUID().toString(), 8, new Piece[8][8]);
     this.board = board;
   }
 
   @Test
   void boardHasValidDimensions() {
-    Board board = new Board(8);
+    Board board = new Board(UUID.randomUUID().toString(), 8, new Piece[8][8]);
     assertEquals(8, board.getSize());
   }
 
   @Test
-  void boardShouldTakeAndRemoveChecker() {
-    Checker checker = new Checker(UUID.randomUUID().toString());
-    this.board.putCheckerOnPosition(checker, RowKeyEnum.ONE, ColumnKeyEnum.A);
-    assertEquals(checker, board.getCheckerFromPosition(RowKeyEnum.ONE, ColumnKeyEnum.A));
+  void boardShouldTakeAndReturnChecker() {
+    Piece piece = new Piece(UUID.randomUUID().toString());
+    this.board.putCheckerOnPosition(piece, 0, 0);
+    assertEquals(piece, board.getCheckerFromPosition(0, 0));
   }
 
   @Test
   void checkersShouldBePresentWhereTheyWereInitialized() {
     createFullBoard();
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.ONE, ColumnKeyEnum.A));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.THREE, ColumnKeyEnum.A));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.TWO, ColumnKeyEnum.B));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.ONE, ColumnKeyEnum.C));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.THREE, ColumnKeyEnum.C));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.TWO, ColumnKeyEnum.D));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.ONE, ColumnKeyEnum.E));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.THREE, ColumnKeyEnum.E));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.TWO, ColumnKeyEnum.F));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.ONE, ColumnKeyEnum.G));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.THREE, ColumnKeyEnum.G));
-    assertNotNull(board.getCheckerFromPosition(RowKeyEnum.TWO, ColumnKeyEnum.H));
+    assertNotNull(board.getCheckerFromPosition(0, 0));
+    assertNotNull(board.getCheckerFromPosition(2, 0));
+    assertNotNull(board.getCheckerFromPosition(1, 0));
+    assertNotNull(board.getCheckerFromPosition(0, 2));
+    assertNotNull(board.getCheckerFromPosition(2, 2));
+    assertNotNull(board.getCheckerFromPosition(1, 3));
+    assertNotNull(board.getCheckerFromPosition(0, 4));
+    assertNotNull(board.getCheckerFromPosition(2, 4));
+    assertNotNull(board.getCheckerFromPosition(1, 5));
+    assertNotNull(board.getCheckerFromPosition(0, 6));
+    assertNotNull(board.getCheckerFromPosition(2, 6));
+    assertNotNull(board.getCheckerFromPosition(1, 7));
   }
 
   private void createFullBoard() {
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.ONE, ColumnKeyEnum.A);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.THREE, ColumnKeyEnum.A);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.TWO, ColumnKeyEnum.B);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.ONE, ColumnKeyEnum.C);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.THREE, ColumnKeyEnum.C);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.TWO, ColumnKeyEnum.D);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.ONE, ColumnKeyEnum.E);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.THREE, ColumnKeyEnum.E);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.TWO, ColumnKeyEnum.F);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.ONE, ColumnKeyEnum.G);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.THREE, ColumnKeyEnum.G);
-    this.board.putCheckerOnPosition(new Checker(UUID.randomUUID().toString()), RowKeyEnum.TWO, ColumnKeyEnum.H);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 0, 0);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 2, 0);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 1, 0);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 0, 2);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 2, 2);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 1, 3);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 0, 4);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 2, 4);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 1, 5);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 0, 6);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 2, 6);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 1, 7);
   }
 }

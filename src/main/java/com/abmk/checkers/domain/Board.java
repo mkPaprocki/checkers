@@ -1,12 +1,11 @@
 package com.abmk.checkers.domain;
 
-import java.util.EnumSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 
 /**
  * Project: Checkers
@@ -15,37 +14,33 @@ import org.springframework.data.redis.core.RedisHash;
  *
  * Author    : Mateusz Paprocki
  */
-@RedisHash("board")
 @Data
+@Document(collation = "board")
 public class Board {
 
-  @Id private final UUID id;
+  @Id
+  private final String id;
   private final Integer size;
-  private Map<RowKeyEnum, Map<ColumnKeyEnum, Checker>> boardState;
+  private Piece[][] boardState;
 
-  public Board(final Integer size) {
-    this.id = UUID.randomUUID();
+  @PersistenceConstructor
+  public Board(String id, Integer size, Piece[][] boardState) {
+    this.id = id;
     this.size = size;
-    this.boardState = initializeNewBoardState();
+    this.boardState = boardState;
   }
 
-  private Map<RowKeyEnum, Map<ColumnKeyEnum, Checker>> initializeNewBoardState() {
-    Map<RowKeyEnum, Map<ColumnKeyEnum, Checker>> boardMap = new LinkedHashMap<>();
-    EnumSet.allOf(RowKeyEnum.class).forEach(rowKeyEnum -> boardMap.put(rowKeyEnum, null)
-    );
-    boardMap.forEach((rowKeyEnum, columnKeyEnumCheckerMap) -> {
-      Map<ColumnKeyEnum, Checker> columnMap = new LinkedHashMap<>();
-      EnumSet.allOf(ColumnKeyEnum.class).forEach(col -> columnMap.put(col, null));
-      boardMap.put(rowKeyEnum, columnMap);
-    });
-    return boardMap;
+  public Board(final String id, final int size) {
+    this.id = id;
+    this.size = size;
+    this.boardState = new Piece[size][size];
   }
 
-  public void putCheckerOnPosition(Checker checker, RowKeyEnum row, ColumnKeyEnum column) {
-    this.boardState.get(row).put(column, checker);
+  public void putCheckerOnPosition(Piece piece, Integer row, Integer column) {
+    getBoardState()[row][column] = piece;
   }
 
-  public Checker getCheckerFromPosition(RowKeyEnum row, ColumnKeyEnum column){
-    return getBoardState().get(row).get(column);
+  public Piece getCheckerFromPosition(Integer row, Integer column) {
+    return getBoardState()[row][column];
   }
 }

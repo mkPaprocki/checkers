@@ -1,8 +1,11 @@
 package com.abmk.checkers.repository;
 
+
 import com.abmk.checkers.domain.Board;
+import java.util.List;
 import java.util.UUID;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * Project: Checkers
@@ -10,8 +13,8 @@ import org.springframework.data.repository.CrudRepository;
  * Created on: 27.09.2020
  *
  * Author    : Mateusz Paprocki
- *
  */
-public interface BoardRepository extends CrudRepository<Board, UUID> {
-
+@Repository
+public interface BoardRepository extends MongoRepository<Board, String> {
+  List<Board> findBySize(int size);
 }

@@ -1,18 +1,13 @@
 package com.abmk.checkers.repository;
 
-/**
- * Project: Checkers
- *
- * Created on: 27.09.2020
- *
- * Author    : Mateusz Paprocki
- *
- */
 
-import org.springframework.data.repository.CrudRepository;
-
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends CrudRepository<User, UUID> {
+@Repository
+public interface UserRepository extends MongoRepository<User, String> {
 
 }

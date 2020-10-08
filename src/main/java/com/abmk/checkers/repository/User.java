@@ -1,25 +1,15 @@
 package com.abmk.checkers.repository;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.UUID;
-
-@RedisHash("user")
+@Data
+@Document (collation = "user")
+@AllArgsConstructor
 public class User {
-  @Id private UUID id;
+  @Id
+  private String id;
   private String name;
-
-  public User(UUID id, String name) {
-    this.id = id;
-    this.name = name;
-  }
-
-  public UUID getId() {
-    return id;
-  }
-
-  public String getName() {
-    return name;
-  }
 }
