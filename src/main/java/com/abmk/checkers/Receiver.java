@@ -12,7 +12,7 @@ public class Receiver {
   private AtomicInteger counter = new AtomicInteger();
 
   public void receiveMessage(String message) {
-    LOGGER.info("Received <" + message + ">");
+    LOGGER.info("Received < {} >", message);
     counter.incrementAndGet();
   }
 

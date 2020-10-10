@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.abmk.checkers.domain.Board;
 import com.abmk.checkers.domain.Piece;
+import com.abmk.checkers.domain.PieceColoru;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ class BoardTest {
 
   @Test
   void boardShouldTakeAndReturnChecker() {
-    Piece piece = new Piece(UUID.randomUUID().toString());
+    Piece piece = new Piece(UUID.randomUUID().toString(), PieceColoru.WHITE);
     this.board.putCheckerOnPosition(piece, 0, 0);
     assertEquals(piece, board.getCheckerFromPosition(0, 0));
   }
@@ -61,17 +62,17 @@ class BoardTest {
   }
 
   private void createFullBoard() {
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 0, 0);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 2, 0);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 1, 0);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 0, 2);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 2, 2);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 1, 3);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 0, 4);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 2, 4);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 1, 5);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 0, 6);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 2, 6);
-    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString()), 1, 7);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 0, 0);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 2, 0);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 1, 0);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 0, 2);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 2, 2);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 1, 3);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 0, 4);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 2, 4);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 1, 5);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 0, 6);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 2, 6);
+    this.board.putCheckerOnPosition(new Piece(UUID.randomUUID().toString(), PieceColoru.BLACK), 1, 7);
   }
 }

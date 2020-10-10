@@ -9,7 +9,6 @@ import com.abmk.checkers.domain.Piece;
  *
  * Author    : Mateusz Paprocki
  *
- * Copyright 2020 (C) Si-eCommerce sp. z o.o.
  */
 public interface BoardService {
   Piece[][] initializeNewBoardState();

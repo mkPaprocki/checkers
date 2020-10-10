@@ -25,7 +25,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * Author    : Mateusz Paprocki
  *
- * Copyright 2020 (C) Si-eCommerce sp. z o.o.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
