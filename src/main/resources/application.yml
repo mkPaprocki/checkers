@@ -1,0 +1,4 @@
+websocket:
+  brokerDestination: "/topic"
+  applicationDestination: "/app"
+  stompEndpoint: "/gs-guide-websocket"

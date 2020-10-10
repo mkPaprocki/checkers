@@ -1,6 +1,7 @@
 package com.abmk.checkers;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -14,19 +15,24 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
  * Author    : Mateusz Paprocki
  *
  */
-//TODO change config so it is loaded either form properties fiel or external server
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+  private WebSocetProps props;
+
+  public WebSocketConfig(WebSocetProps props) {
+    this.props = props;
+  }
+
   @Override
   public void configureMessageBroker(MessageBrokerRegistry config) {
-    config.enableSimpleBroker("/topic");
-    config.setApplicationDestinationPrefixes("/app");
+    config.enableSimpleBroker(props.getBrokerDestination());
+    config.setApplicationDestinationPrefixes(props.getApplicationDestination());
   }
 
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/gs-guide-websocket").setAllowedOrigins("*").withSockJS();
+    registry.addEndpoint(props.getStompEndpoint()).setAllowedOrigins("*").withSockJS();
   }
 }
