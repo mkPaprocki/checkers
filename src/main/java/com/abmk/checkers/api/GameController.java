@@ -4,6 +4,7 @@ import com.abmk.checkers.domain.Board;
 import com.abmk.checkers.repository.BoardRepository;
 import com.abmk.checkers.service.BoardService;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class GameController {
 
   @MessageMapping("/hello")
   @SendTo("/move/piece")
-  public String greeting(String message) throws Exception {
+  public String greeting(String message) throws JsonProcessingException, InterruptedException {
     Thread.sleep(1000); // simulated delay
     Board board = new Board(UUID.randomUUID().toString(), 8, boardService.initializeNewBoardState());
     ObjectMapper mapper = new ObjectMapper();
