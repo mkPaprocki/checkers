@@ -1,8 +1,8 @@
 package com.abmk.checkers.api;
 
 import com.abmk.checkers.domain.Board;
-import com.abmk.checkers.domain.Piece;
 import com.abmk.checkers.repository.BoardRepository;
+import com.abmk.checkers.service.BoardService;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
@@ -17,17 +17,20 @@ public class GameController {
   @Autowired
   private final BoardRepository boardRepository;
 
+  @Autowired
+  BoardService boardService;
+
   public GameController(BoardRepository boardRepository) {
     this.boardRepository = boardRepository;
   }
 
   @MessageMapping("/hello")
-  @SendTo("/topic/greetings")
+  @SendTo("/move/piece")
   public String greeting(String message) throws Exception {
     Thread.sleep(1000); // simulated delay
-    Board board = new Board(UUID.randomUUID().toString(), 8, new Piece[8][8]);
-    boardRepository.save(board);
-    return "{ \"name\":\"John\", \"age\":30, \"car\":\"null\" }";
+    Board board = new Board(UUID.randomUUID().toString(), 8, boardService.initializeNewBoardState());
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(boardRepository.save(board));
   }
 
   public static String stringify(Object object) {
