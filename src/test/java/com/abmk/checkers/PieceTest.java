@@ -44,5 +44,4 @@ class PieceTest {
     assertEquals(piece1.getColour(), piece2.getColour());
   }
 
-
 }

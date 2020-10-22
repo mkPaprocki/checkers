@@ -17,4 +17,19 @@ public class Piece {
   private String id;
   private PieceColoru colour;
 
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public PieceColoru getColour() {
+    return colour;
+  }
+
+  public void setColour(PieceColoru colour) {
+    this.colour = colour;
+  }
 }

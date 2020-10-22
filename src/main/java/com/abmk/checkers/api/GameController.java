@@ -29,7 +29,7 @@ public class GameController {
   @SendTo("/move/piece")
   public String greeting(String message) throws JsonProcessingException, InterruptedException {
     Thread.sleep(1000); // simulated delay
-    Board board = new Board(UUID.randomUUID().toString(), 8, boardService.initializeNewBoardState());
+    Board board = boardService.initializeNewBoardState();
     ObjectMapper mapper = new ObjectMapper();
     return mapper.writeValueAsString(boardRepository.save(board));
   }

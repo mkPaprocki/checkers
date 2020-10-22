@@ -34,12 +34,4 @@ public class Board {
     this.size = size;
     this.boardState = new Piece[size][size];
   }
-
-  public void putCheckerOnPosition(Piece piece, Integer row, Integer column) {
-    getBoardState()[row][column] = piece;
-  }
-
-  public Piece getCheckerFromPosition(Integer row, Integer column) {
-    return getBoardState()[row][column];
-  }
 }

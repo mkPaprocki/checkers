@@ -1,8 +1,11 @@
 package com.abmk.checkers.service;
 
+import com.abmk.checkers.domain.Board;
+import com.abmk.checkers.domain.BoardFactory;
 import com.abmk.checkers.domain.Piece;
-import com.abmk.checkers.domain.PieceColoru;
-import java.util.UUID;
+import com.abmk.checkers.domain.Position;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,24 +14,67 @@ import org.springframework.stereotype.Service;
  * Created on: 29.09.2020
  *
  * Author    : Mateusz Paprocki
- *
  */
 @Service
 public class BoardServiceImpl implements BoardService {
-  public Piece[][] initializeNewBoardState() {
-    Piece[][] board = new Piece[8][8];
-    board[0][0] = new Piece("1", PieceColoru.WHITE);
-    board[2][0] = new Piece("2", PieceColoru.WHITE);
-    board[1][0] = new Piece("3", PieceColoru.WHITE);
-    board[0][2] = new Piece("4", PieceColoru.WHITE);
-    board[2][2] = new Piece("5", PieceColoru.WHITE);
-    board[1][3] = new Piece("6", PieceColoru.WHITE);
-    board[0][4] = new Piece("7", PieceColoru.WHITE);
-    board[2][4] = new Piece("8", PieceColoru.WHITE);
-    board[1][5] = new Piece("9", PieceColoru.WHITE);
-    board[0][6] = new Piece("10", PieceColoru.WHITE);
-    board[2][6] = new Piece("11", PieceColoru.WHITE);
-    board[1][7] = new Piece("12", PieceColoru.WHITE);
-    return board;
+
+  public Board initializeNewBoardState() {
+
+    return BoardFactory.createNewBoardWithPieces();
+  }
+
+  @Override
+  public Map<Piece, Position> getAllPiecesWithPositions(final Board board) {
+    Piece[][] boardState = board.getBoardState();
+    Map<Piece, Position> allPiecesWithPositions = new HashMap<>();
+    for (int i = 0; boardState.length > i; i++) {
+      for (int j = 0; boardState.length > j; j++) {
+        if (boardState[i][j] != null) {
+          allPiecesWithPositions.put(boardState[i][j], new Position(i, j));
+        }
+      }
+    }
+    return allPiecesWithPositions;
+  }
+
+  //TODO resolve issue with move and put piece on position. Issue with empty fields. Do I need those methods??
+  @Override
+  public Boolean movePieceToPosition(Board board, Piece piece, Position position) {
+    if (board.getBoardState().length > 0 && isEmptyPosition(board, position)) {
+      final Position currentPosition = findPiecePosition(board, piece.getId());
+      if (currentPosition != null) {
+        board.getBoardState()[position.getRow()][position.getColumn()] = board.getBoardState()[currentPosition
+            .getRow()][currentPosition.getColumn()];
+        board.getBoardState()[currentPosition.getRow()][currentPosition.getColumn()] = null;
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public Position findPiecePosition(final Board board, final String pieceId) {
+    final Piece[][] boardState = board.getBoardState();
+    for (int i = 0; boardState.length > i; i++) {
+      for (int j = 0; boardState.length > j; j++) {
+        if (boardState[i][j] != null && pieceId.equals(boardState[i][j].getId())) {
+          return new Position(i, j);
+        }
+      }
+    }
+    return null;
+  }
+
+  @Override
+  public Map<Piece, Position> getPieceWithPositionById(Board board, String id) {
+    final Position position = findPiecePosition(board, id);
+    final Piece piece = board.getBoardState()[position.getRow()][position.getColumn()];
+    final Map<Piece, Position> pieceWithPosition = new HashMap<>();
+    pieceWithPosition.put(piece, position);
+    return pieceWithPosition;
+  }
+
+  private boolean isEmptyPosition(Board board, Position position) {
+    return null == board.getBoardState()[position.getRow()][position.getColumn()];
   }
 }

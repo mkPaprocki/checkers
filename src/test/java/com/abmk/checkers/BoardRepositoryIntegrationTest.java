@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.abmk.checkers.domain.Board;
-import com.abmk.checkers.domain.Piece;
 import com.abmk.checkers.repository.BoardRepository;
 import com.abmk.checkers.service.BoardService;
 import java.util.Optional;
@@ -24,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Created on: 28.09.2020
  *
  * Author    : Mateusz Paprocki
- *
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -59,21 +57,19 @@ class BoardRepositoryIntegrationTest {
 
   @Test
   void testShouldSaveInitializedBoardToMongoDB() {
-    Board board = new Board(this.id, 8);
-    Piece[][] boardState = boardService.initializeNewBoardState();
-    board.setBoardState(boardState);
+    Board board = boardService.initializeNewBoardState();
     Board saved = boardRepository.save(board);
-    Optional<Board> loadedOpt = boardRepository.findById(this.id);
+    Optional<Board> loadedOpt = boardRepository.findById(board.getId());
     assertTrue(loadedOpt.isPresent());
     assertTrue(loadedOpt.get() instanceof Board);
     Board loaded = loadedOpt.get();
     assertNotNull(loaded);
     assertNotNull(loaded.getId());
     assertNotNull(loaded.getSize());
-    assertEquals(this.id, saved.getId());
-    assertEquals(this.size, saved.getSize());
+    assertEquals(board.getId(), saved.getId());
+    assertEquals(board.getSize(), saved.getSize());
     assertNotNull(saved.getBoardState());
-    assertEquals(boardState, saved.getBoardState());
-    assertEquals(boardState[0][0], board.getCheckerFromPosition(0,0));
+    assertEquals(board.getBoardState(), saved.getBoardState());
+    assertEquals(board.getBoardState()[0][0], saved.getBoardState()[0][0]);
   }
 }
