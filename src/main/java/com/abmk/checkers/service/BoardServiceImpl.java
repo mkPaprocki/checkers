@@ -37,20 +37,24 @@ public class BoardServiceImpl implements BoardService {
     return allPiecesWithPositions;
   }
 
-  //TODO resolve issue with move and put piece on position. Issue with empty fields. Do I need those methods??
   @Override
-  public Boolean movePieceToPosition(Board board, Piece piece, Position position) {
-    if (board.getBoardState().length > 0 && isEmptyPosition(board, position)) {
+  public Boolean movePieceToPosition(final Board board, Piece piece, final Position newPosition) {
+    if (newPosition != null && board.getBoardState().length > 0) {
       final Position currentPosition = findPiecePosition(board, piece.getId());
-      if (currentPosition != null) {
-        board.getBoardState()[position.getRow()][position.getColumn()] = board.getBoardState()[currentPosition
-            .getRow()][currentPosition.getColumn()];
-        board.getBoardState()[currentPosition.getRow()][currentPosition.getColumn()] = null;
-      }
-      return true;
+      return movePieceToNewPositionEmptyOld(board, newPosition, currentPosition);
     } else {
       return false;
     }
+  }
+
+  private boolean movePieceToNewPositionEmptyOld(Board board, Position newPosition, Position currentPosition) {
+    if (currentPosition != null) {
+      board.getBoardState()[newPosition.getRow()][newPosition.getColumn()] = board.getBoardState()[currentPosition
+          .getRow()][currentPosition.getColumn()];
+      board.getBoardState()[currentPosition.getRow()][currentPosition.getColumn()] = null;
+      return true;
+    }
+    return false;
   }
 
   public Position findPiecePosition(final Board board, final String pieceId) {
@@ -66,15 +70,11 @@ public class BoardServiceImpl implements BoardService {
   }
 
   @Override
-  public Map<Piece, Position> getPieceWithPositionById(Board board, String id) {
+  public Map<Piece, Position> getPieceWithPositionById(final Board board, final String id) {
     final Position position = findPiecePosition(board, id);
     final Piece piece = board.getBoardState()[position.getRow()][position.getColumn()];
     final Map<Piece, Position> pieceWithPosition = new HashMap<>();
     pieceWithPosition.put(piece, position);
     return pieceWithPosition;
-  }
-
-  private boolean isEmptyPosition(Board board, Position position) {
-    return null == board.getBoardState()[position.getRow()][position.getColumn()];
   }
 }

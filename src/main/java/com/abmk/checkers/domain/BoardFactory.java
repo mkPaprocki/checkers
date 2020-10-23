@@ -1,8 +1,6 @@
 package com.abmk.checkers.domain;
 
-import com.abmk.checkers.service.BoardService;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Project: Checkers

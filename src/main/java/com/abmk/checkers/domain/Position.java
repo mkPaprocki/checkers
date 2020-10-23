@@ -1,12 +1,9 @@
 package com.abmk.checkers.domain;
 
 import java.util.Objects;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import javax.validation.constraints.NotNull;
 
 /**
  * Project: Checkers
@@ -20,17 +17,11 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class Position {
 
-  @Valid
-  @NotNull
-  @Min(0)
-  @Max(7)
-  Integer row;
+  @Size(min = 0, max = 7)
+  int row;
 
-  @Valid
-  @NotNull
-  @Min(0)
-  @Max(7)
-  Integer column;
+  @Size(min = 0, max = 7)
+  int column;
 
   @Override
   public boolean equals(Object o) {
@@ -41,20 +32,12 @@ public class Position {
       return false;
     }
     Position position = (Position) o;
-    return row.equals(position.row) &&
-        column.equals(position.column);
+    return row == position.row &&
+        column == position.column;
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(row, column);
-  }
-
-  public Integer getRow() {
-    return row;
-  }
-
-  public void setRow(@Valid Integer row) {
-    this.row = row;
   }
 }
